@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+    <!--Car注册-->
+    <bean id="car" class="cn.happy.spring03areaproperty.Car">
+        <property name="brand" value="兰博基尼"></property>
+        <property name="color" value="蓝色"></property>
+     </bean>
+    <!--Student-->
+    <bean id="stu" class="cn.happy.spring03areaproperty.Student">
+        <property name="name" value="小贱贱"></property>
+        <property name="age" value="5"></property>
+        <property name="car" ref="car"></property>
+    </bean>
+</beans>

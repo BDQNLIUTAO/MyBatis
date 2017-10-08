@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <!--01.目标对象-->
+    <bean id="someService" class="cn.happy.spring14advisor01.SomeService"></bean>
+
+    <!--02增强通知-->
+    <bean id="beforeAdvise" class="cn.happy.spring14advisor01.MyBeforeAdvise"></bean>
+
+    <!--增强：顾问-->
+    <bean id="beforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <property name="advice" ref="beforeAdvise"></property>
+        <property name="mappedNames" value="add"></property>
+    </bean>
+    <!--aop   代理工厂bean-->
+    <bean id="proxyService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--配置需要增强的目标对象-->
+        <property name="target" ref="someService"></property>
+        <!--做怎样的增强-->
+        <property name="interceptorNames" value="beforeAdvisor"></property>
+        <property name="proxyTargetClass" value="true"></property>
+     </bean>
+
+</beans>

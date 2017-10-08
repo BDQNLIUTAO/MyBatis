@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+">
+    <bean id="someDAO" class="cn.happy.spring15aops.dao.SomeDAOImpl"></bean>
+    <bean id="someService" class="cn.happy.spring15aops.service.SomeServiceImpl">
+        <property name="dao" ref="someDAO"></property>
+    </bean>
+    <bean id="beforeAdvice" class="cn.happy.spring15aops.aop.MyBeforeAdvice"></bean>
+    <aop:config>
+        <aop:pointcut id="mypointcut" expression="execution(* *..service.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="beforeAdvice" pointcut-ref="mypointcut"></aop:advisor>
+    </aop:config>
+</beans>

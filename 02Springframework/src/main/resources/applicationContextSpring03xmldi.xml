@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+    <!--Car注册-->
+    <bean id="car" class="cn.happy.spring05xmldi.Car">
+        <property name="brand" value="兰博基尼"></property>
+        <property name="color" value="蓝色"></property>
+     </bean>
+    <!--Student   01.设置注入-->
+    <!--<bean id="stu" class="cn.happy.spring03areaproperty.Student">
+        <property name="name" value="小贱贱"></property>
+        <property name="age" value="5"></property>
+        <property name="car" ref="car"></property>
+    </bean>-->
+
+    <!--02.构造注入-->
+    <!--<bean id="stu" class="cn.happy.spring05xmldi.Student">
+        <constructor-arg name="name" value="小米"></constructor-arg>
+        <constructor-arg index="1" value="5"></constructor-arg>
+        <constructor-arg index="2" ref="car"></constructor-arg>
+    </bean>-->
+
+    <!--p命名空间注入-->
+    <bean id="stu" class="cn.happy.spring05xmldi.Student" p:name="光头强" p:age="3" p:car-ref="car"></bean>
+
+    <!--集合注入之array-->
+    <!--<bean id="array" class="cn.happy.spring05xmldi.MyCollection">
+        <property name="array">
+            <array>
+                <value>光头强</value>
+                <value>星儿</value>
+                <value>孙武功</value>
+            </array>
+        </property>
+    </bean>-->
+
+    <!--集合注入之list-->
+    <!--<bean id="list" class="cn.happy.spring05xmldi.MyCollection">
+        <property name="list">
+            <list>
+                <value>光头强</value>
+                <value>星儿</value>
+                <value>孙武功</value>
+            </list>
+        </property>
+    </bean>-->
+
+    <!--集合注入之set-->
+    <!--<bean id="set" class="cn.happy.spring05xmldi.MyCollection">
+        <property name="set">
+            <set>
+                <value>光头强</value>
+                <value>星儿</value>
+                <value>孙武功</value>
+            </set>
+        </property>
+    </bean>-->
+
+    <!--集合注入之map-->
+    <!--<bean id="map" class="cn.happy.spring05xmldi.MyCollection">
+        <property name="map">
+            <map>
+                <entry key="001" value="猪八戒"></entry>
+                <entry key="002" value="高小姐"></entry>
+                <entry key="003" value="高原外"></entry>
+            </map>
+        </property>
+    </bean>-->
+
+    <!--集合注入之properties-->
+    <bean id="properties" class="cn.happy.spring05xmldi.MyCollection">
+        <property name="properties">
+            <props>
+                <prop key="1001">王五</prop>
+                <prop key="1002">李明</prop>
+                <prop key="1003">小精灵</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
