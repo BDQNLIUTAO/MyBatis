@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>   <!--根节点-->
+    <!--<settings>
+        <setting name="autoMappingBehavior" value="NONE"/>
+    </settings>-->
+    <!--别名的设定-->
+    <typeAliases>
+        <!--用指定的包中的简单类名作为别名-->
+        <package name="cn.happy.entity"></package>
+        <!--<typeAlias type="UserInfo" alias="UserInfo"></typeAlias>-->
+    </typeAliases>
+    <!--通过以下代码去关联数据库的连接信息文件-->
+   <!-- <properties resource="jdbc.properties"/>-->
+    <environments default="development">  <!--环境-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>     <!--事务管理机制-->
+            <!--POOLED：mybatis：自带的数据源，J-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql:///y2166"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--<mapper resource="cn\happy\dao\IUserInfoDao.xml"/>-->
+        <package name="cn.happy.dao"></package>
+    </mappers>
+</configuration>

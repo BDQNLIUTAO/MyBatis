@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IUserInfoDao">
+    <sql id="colums">id,name,sex,age</sql>
+    <resultMap id="UserResultMap" type="UserInfo">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+    </resultMap>
+    <!--智能标签 foreach array-->
+    <select id="findByForeachArray" resultType="UserInfo">
+        select * from UserInfo
+        <where>
+            <if test="array.length>0">
+                id in
+                <foreach collection="array" open="(" close=")" separator="," item="myid">
+                    #{myid}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <!--智能标签choose-->
+    <select id="findBychoose" resultType="UserInfo">
+        select * from UserInfo
+        <where>
+            <choose>
+                <when test="name!=null">
+                    and name like '%' #{name} '%'
+                </when>
+                <when test="age!=null">
+                    and age>#{age}
+                </when>
+                <otherwise>
+                    and=1=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+    <!--智能标签if-->
+    <select id="findByif" resultType="UserInfo">
+        select * from userinfo
+        <where>
+            <if test="name!=null">
+                and name like '%' #{name} '%'
+            </if>
+            <if test="age!=null">
+                and age>#{age}
+            </if>
+        </where>
+    </select>
+    <!--根据索引号-->
+    <select id="findUserInfoByManyConditionByIndex" resultType="UserInfo">
+        select * from userinfo where name like '%' #{0} '%' and age>#{1}
+    </select>
+    <!--查询全部-->
+    <select id="findall" resultType="UserInfo">
+        select <include refid="colums"></include> from userinfo
+    </select>
+    <!--按条件查询-->
+    <select id="getUserResultMapById" parameterType="int" resultMap="UserResultMap">
+        select * from userinfo where id=#{id}
+    </select>
+    <!--添加-->
+    <insert id="adduser" parameterType="UserInfo">
+        insert into userinfo(name,sex) values(#{name},#{sex})
+        <selectKey keyProperty="id" resultType="int">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+    <!--修改-->
+    <update id="edituser">
+         update userinfo set name=#{name},sex=#{sex} where id=#{id}
+    </update>
+    <!--删除-->
+    <delete id="deluser">
+        DELETE from userinfo where id=#{id}
+    </delete>
+</mapper>

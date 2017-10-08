@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.happy.dao.IDeptDao">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+    <!--二级缓存条件之一-->
+    <!--<cache/>-->
+    <!--一对多单条sql-->
+    <resultMap id="DeptMapper" type="Dept">
+        <id column="deptno" property="deptno"></id>
+        <result column="deptname" property="deptname"></result>
+        <collection property="list" ofType="UserInfo">
+            <id column="id" property="id"></id>
+            <result column="name" property="name"></result>
+        </collection>
+    </resultMap>
+    <!--一对多多条sql-->
+    <resultMap id="DeptMapperMutliSQL" type="Dept">  <!--findMutliSQL-->
+        <id column="deptno" property="deptno"></id>
+        <result column="deptname" property="deptname"></result>
+        <collection property="list" ofType="UserInfo" select="getUserByDeptno" column="deptno"></collection>
+    </resultMap>
+    <!--根据部门编号，查询部门下所有员工集合-->
+    <select id="getUserByDeptno" resultType="UserInfo">
+        select * from userinfo where id=#{id}
+    </select>
+    <resultMap id="DeptResultMap" type="cn.happy.entity.Dept">
+        <result property="deptname" column="deptname"></result>
+    </resultMap>
+    <!--查询全部-->
+    <select id="findall" resultMap="DeptResultMap">
+        select * from dept
+    </select>
+    <!--模糊查询  按姓名查询-->
+    <select id="findlikedept" resultType="Dept">
+        select * from dept where deptname like '%' #{deptname} '%'
+    </select>
+    <!--一对多单条-->
+    <select id="findById" resultMap="DeptMapper">
+        SELECT dept.deptno,deptname,id,NAME FROM dept,userinfo WHERE dept.deptno=userinfo.deptno AND dept.deptno=#{deptno}
+    </select>
+    <!--多条sql-->
+    <select id="findMutliSQL" resultMap="DeptMapperMutliSQL">
+        SELECT * FROM dept where deptno=#{deptno}
+    </select>
+</mapper>
