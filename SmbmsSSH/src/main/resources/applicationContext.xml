@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--包扫描器-->
+    <context:component-scan base-package="cn.smbms"></context:component-scan>
+    <!--注解驱动-->
+    <mvc:annotation-driven/>
+   <!--00.识别jdbc.properties-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"></property>
+    </bean>
+    <!--03建立数据源 alibaba-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.uname}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <!--工厂配置-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--指定数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--大配置路径-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    <!--03.dao的配置 映射文件的扫描器 可以动态的在内存构建接口的实现类，代理对象-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.smbms.dao"></property>
+    </bean>
+    <!--04.service的配置-->
+    <!--<bean id="bookService" class="cn.happy.spring24ssmxml.service.BookServiceImpl">
+        <property name="dao" ref="IBookDAO"></property>
+    </bean>-->
+    <!--事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--&lt;!&ndash;事务方式三：aop 实现事务&ndash;&gt;
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="buy*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="StockException"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        &lt;!&ndash;-配置了切点  pointcut&ndash;&gt;
+        <aop:pointcut id="mypoint" expression="execution(* *..service.*.*(..))"></aop:pointcut>
+        &lt;!&ndash;顾问&ndash;&gt;
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="mypoint"></aop:advisor>
+    </aop:config>-->
+</beans>
