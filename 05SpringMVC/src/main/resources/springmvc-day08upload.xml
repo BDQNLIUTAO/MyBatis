@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+   <!--包扫描器-->
+    <context:component-scan base-package="cn.happy.day13upload"></context:component-scan>
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+       <!--总大小-->
+       <property name="maxUploadSize" value="5000000"></property>
+       <!--单文件大小-->
+       <!--<property name="maxUploadSizePerFile" value="500000"></property>-->
+       <property name="defaultEncoding" value="utf-8"></property>
+   </bean>
+    <!--注解驱动-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--默认视图解析器的名称-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--处理器 映射器-->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+    <!--处理器-->
+    <bean id="/hello.do" class="cn.happy.day01.FirstController"></bean>
+    <!--方式二：解决静态资源无法访问的问题  警告：放到最后-->
+    <!--<mvc:default-servlet-handler></mvc:default-servlet-handler>-->
+    <!--方式三-->
+    <mvc:resources mapping="/image/**" location="/image/"></mvc:resources>
+</beans>

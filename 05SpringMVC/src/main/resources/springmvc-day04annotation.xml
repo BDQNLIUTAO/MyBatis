@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+     <!--包扫描器-->
+     <context:component-scan base-package="cn.happy.day07exceptionif"></context:component-scan>
+     <!--注解驱动-->
+     <mvc:annotation-driven/>
+    <!-- 注册系统异常处理器-->
+    <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+     <property name="defaultErrorView" value="/error.jsp"></property>
+     </bean>-->
+    <!-- 系统异常处理器高级-->
+     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+     <!--对象异常-->
+     <property name="exceptionAttribute" value="ex"></property>
+     <!--根据异常类型，定位到对应的异常页面-->
+     <property name="exceptionMappings">
+          <props>
+               <prop key="cn.happy.day07exceptionif.exceptions.NameException">/error/nameerrors.jsp</prop>
+               <prop key="cn.happy.day07exceptionif.exceptions.AgeException">/error/ageerrors.jsp</prop>
+          </props>
+     </property>
+     </bean>
+     <!--自定义异常-->
+     <bean class="cn.happy.day07exceptionif.handlerexception.MyHandlerException"></bean>
+</beans>
