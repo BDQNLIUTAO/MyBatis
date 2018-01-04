@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cn.hibernate.day04mapping.manytomany">
+    <!--实体 name=实体端的内容   column=DB端的内容-->
+    <class name="Employee" table="EMPLOYEE" schema="liutao" lazy="true">
+        <!--和底层数据表对应的主键   业务意义-->
+        <id name="empid" column="EMPNO">
+           <generator class="native"></generator>
+        </id>
+        <property name="empname" column="EMPNAME"></property>
+        <set name="projects" table="REMPPRO">
+            <key column="REMPID"></key>
+            <many-to-many class="Project" column="RPROID"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

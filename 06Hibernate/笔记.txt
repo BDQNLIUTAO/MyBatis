@@ -1,0 +1,29 @@
+OpenSessionInView
+错误解决：org.hibernate.LazyInitializationException: could not initialize proxy - no Session
+1.load方法改成get
+lazy="false"
+2.在service层判断对象是否被初始化，如果未被初始化，强制初始化Hibernate.initialize(data)
+ if (!Hibernate.isInitialized(data)){
+            Hibernate.isInitialized(data);
+        }
+3.在映射文件，配置class节点  将lazy研制加载属性改成false（立即加载）
+4.service层使用以下属性，保证在ui访问属性的时候，数据已经存在了 ，即便关闭了通道，也可以访问期望数据
+        Employee employee=(Employee)data;
+        employee.getEmpname();
+5.创建filter层
+public class OpenSessionInViewFilter implements javax.servlet.Filter {
+    public void destroy() {
+    }
+
+    public void doFilter(javax.servlet.ServletRequest req, javax.servlet.ServletResponse resp, javax.servlet.FilterChain chain) throws javax.servlet.ServletException, IOException {
+       Transaction tx = HibernateUtil.getSession().beginTransaction();
+       tx.commit();
+       HibernateUtil.closeSession();
+       chain.doFilter(req, resp);
+         }
+
+    public void init(javax.servlet.FilterConfig config) throws javax.servlet.ServletException {
+
+    }
+
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cn.hibernate.day04mapping.manytomanydoublebyonetomany">
+    <class name="ProEmp" table="PROEMP">
+        <id name="id" column="ID">
+            <generator class="native"></generator>
+        </id>
+        <many-to-one name="emp" class="Employee">
+            <column name="empid"></column>
+        </many-to-one>
+        <many-to-one name="pro" class="Project">
+            <column name="proid"></column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

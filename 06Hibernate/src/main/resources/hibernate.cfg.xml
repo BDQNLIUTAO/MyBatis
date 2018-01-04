@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings -->
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+        <property name="connection.username">liutao</property>
+        <property name="connection.password">liutao</property>
+
+        <!-- JDBC connection pool (use the built-in)  连接池 -->
+        <!--<property name="connection.pool_size">1</property>-->
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management
+         session工厂创建的session与当前线程绑定 bind
+         -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  启用或关闭二级缓存-->
+        <!--<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>-->
+
+        <!-- Echo all executed SQL to stdout 控制台打印sql语句 -->
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+        <!--关联小配置-->
+        <mapping resource="cn/hibernate/day01/entity/Student.hbm.xml"/>
+        <mapping resource="cn/hibernate/day04mapping/manytoone/Dept.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/manytoone/Emp.hbm.xml"></mapping>
+
+        <mapping resource="cn/hibernate/day04mapping/onetomanydouble/Dept.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/onetomanydouble/Emp.hbm.xml"></mapping>
+
+        <!--多对多 双向-->
+        <mapping resource="cn/hibernate/day04mapping/manytomany/Employee.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/manytomany/Project.hbm.xml"></mapping>
+        <!--多对多双向拆分成两个一对多-->
+        <mapping resource="cn/hibernate/day04mapping/manytomanydoublebyonetomany/Employee.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/manytomanydoublebyonetomany/Project.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/manytomanydoublebyonetomany/ProEmp.hbm.xml"></mapping>
+
+        <mapping class="cn.hibernate.day06annotation.base.Dept"></mapping>
+
+        <mapping class="cn.hibernate.day06annotation.onetoone.Emp"></mapping>
+        <mapping class="cn.hibernate.day06annotation.onetoone.Dept"></mapping>
+
+        <mapping class="cn.hibernate.day06annotation.onetomany.Emp"></mapping>
+        <mapping class="cn.hibernate.day06annotation.onetomany.Dept"></mapping>
+
+        <mapping class="cn.hibernate.day06annotation.manytomany.TeacherManytoMany"></mapping>
+        <mapping class="cn.hibernate.day06annotation.manytomany.StudentManytoMany"></mapping>
+    </session-factory>
+
+</hibernate-configuration>
